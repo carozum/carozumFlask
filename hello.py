@@ -1,10 +1,32 @@
+from re import M
+from venv import create
 from flask import Flask
 
 # app is an object, declared with the flask class, __name__ is one of its attributes. 
 app = Flask(__name__)
 
+# decorators
+
+def make_bold(function):
+    def wrapper_function():
+        return "<b>" + function() + "</b>"
+    return wrapper_function
+
+def make_italic(function):
+    def wrapper():
+        return f"<i>{function()}</i>"
+    return wrapper
+
+def make_underline(function):
+    def wrapper():
+        return f"<u>{function()}</u>"
+    return wrapper
+    
 # url '/' is the home page. route() is a decorator function, a method which lives inside the app object and which adds a functionality to the function that is passed inside it. @ is used to simplify the code (shortcut) 
 @app.route('/')
+@make_bold
+@make_italic
+@make_underline
 def home():
     return 'Hello, World!'
 
@@ -23,6 +45,7 @@ def contact():
 @app.route('/username/<name>/<int:age>')
 def greet(name, age):
     return f"hello {name}. You are {age} years old"
+
 
 # to simplify server set up and launch. 
 # file server will now be run in debug Mode - flask debugger
