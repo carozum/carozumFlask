@@ -96,10 +96,18 @@ from flask import render_template
 # 4. create a new directory called static to put all your images and change the path adding /static/mountain.png
 # 5. you put the styles.css inside static folder
 # !!! cache on chrome is a problem : hard reload shift + reload !!!
-@app.route('/carozum')
+@app.route('/portfolio-carozum')
 def my_portfolio():
     return render_template('carozum.html')
 
+
+#*******************************************************
+# html5Up.net to create a web-base name card
+#*******************************************************
+
+@app.route('/carozum-card')
+def name_card():
+    return render_template('carozum-card.html')
 
 
 #*******************************************************
