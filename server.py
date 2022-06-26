@@ -67,6 +67,7 @@ numbertoguess = randint(0, 9)
 
 @app.route('/guessanumber/<int:number>')
 def guess(number):
+    # gifs are coming from giphy.com
     answer = f'''<div style="text-align: center">
             <iframe src="https://giphy.com/embed/xUn3CftPBajoflzROU" width="100" height="100" frameBorder="0" class="giphy-embed" allowFullScreen ></iframe>
             <h1>Guess a number between 0 and 9</h1>
@@ -80,6 +81,26 @@ def guess(number):
     else:
         answer += '''<p style="color: green; font-size: 3rem">You found me !</p><iframe src="https://giphy.com/embed/3ohzdIuqJoo8QdKlnW" width="480" height="222" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>'''
     return answer
+
+
+#*******************************************************
+# page portfolio: rendering an HTML template 
+#*******************************************************
+
+from flask import render_template
+
+# flask quickstart documentation : flask is a framework, not a library, so you have to follow the requirements
+# 1. put your html file into a folder called "templates"
+# 2. import render_template from the flask module
+# 3. call the render_template() method and pass in the file name that we have : carozum.html which lives inside our templates folder
+# 4. create a new directory called static to put all your images and change the path adding /static/mountain.png
+# 5. you put the styles.css inside static folder
+# !!! cache on chrome is a problem : hard reload shift + reload !!!
+@app.route('/carozum')
+def my_portfolio():
+    return render_template('carozum.html')
+
+
 
 #*******************************************************
 # launch the server
