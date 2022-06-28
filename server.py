@@ -1,4 +1,6 @@
-from flask import Flask
+from flask import Flask, render_template
+import random
+from datetime import date
 
 # app is an object, declared with the flask class, __name__ is one of its attributes. 
 app = Flask(__name__)
@@ -62,8 +64,7 @@ def greet(name, age):
 # page random number
 #*******************************************************
 
-from random import randint
-numbertoguess = randint(0, 9)
+numbertoguess = random.randint(0, 9)
 
 @app.route('/guessanumber/<int:number>')
 def guess(number):
@@ -87,8 +88,6 @@ def guess(number):
 # page portfolio: rendering an HTML template 
 #*******************************************************
 
-from flask import render_template
-
 # flask quickstart documentation : flask is a framework, not a library, so you have to follow the requirements
 # 1. put your html file into a folder called "templates"
 # 2. import render_template from the flask module
@@ -109,6 +108,54 @@ def my_portfolio():
 def name_card():
     return render_template('carozum-card.html')
 
+
+#*******************************************************
+# Math problems resolution - templating language jinja
+#*******************************************************
+
+@app.route('/carozum-math')
+def carozum_math():
+    random_number = random.randint(1, 10)
+    the_year = date.today().year
+    return render_template('carozum-math.html', 
+                           num = random_number,
+                           current_year = the_year)
+
+
+
+#*******************************************************
+# guess gender and age of a first name - genderize.io API and Agify.io API
+#*******************************************************
+
+# 1. pip install requests
+# 2. pip freeze | grep requests
+
+import requests
+import json
+
+@app.route('/guess-name/<some_name>')
+def guess_name(some_name):
+    # 1. create the API URL
+    gender_url = f'https://api.genderize.io?name={some_name}'
+    # 2. request to get the data from the URL
+    gender_response = requests.get(gender_url)
+    # 3. we can get hold of the gender data in json format
+    gender_data = gender_response.json()
+    # 4. from the data extract the information under the key "gender"
+    gender = gender_data['gender']
+    
+    age_url = f'https://api.agify.io?name={some_name}'
+    age_response = requests.get(age_url)
+    age_data = age_response.json()
+    age = age_data['age']
+    count = age_data['count']
+    
+    
+    return render_template('guess-name.html',
+                           name = some_name.capitalize(),
+                           gender = gender,
+                           age = age,
+                           count = "{:,}".format(count))
 
 #*******************************************************
 # launch the server
