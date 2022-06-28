@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Flask",
+    "subtitle": "Flask is a web framework for Python developers",
+    "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  },
+  {
+    "id": 2,
+    "title": "Jinja",
+    "subtitle": "Jinja is a templating language created for Python",
+    "body": "An html file can be a template if we are using jinja inside and especially {{ }} are used to specify which parts should actually be evaluated as Python code. When we are working with something that needs an import (for example, import random, it is best to write our code inside our python flask server (server.py). For multiline statement (if statement or for loop), we use {%    %}."
+  },
+  {
+    "id": 3,
+    "title": "Virtual environment in Python",
+    "subtitle": "learn the command line for virtual environment.",
+    "body": "First, to create a virtual environment, open a terminal in your project folder : python3 -m venv .venv. Then to activate : source .venv/bin/activate. To deactivate, simply : deactivate in the terminal."
+  }
+]

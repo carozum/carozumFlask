@@ -29,11 +29,11 @@ def make_underline(function):
 #*******************************************************
     
 # url '/' is the home page. route() is a decorator function, a method which lives inside the app object and which adds a functionality to the function that is passed inside it. @ is used to simplify the code (shortcut) 
-@app.route('/')
+@app.route('/hello-world')
 @make_bold
 @make_italic
 @make_underline
-def home():
+def get_hello_world():
     return 'Hello, World!'
 
 #*******************************************************
@@ -41,7 +41,7 @@ def home():
 #*******************************************************
 
 @app.route('/contact')
-def contact():
+def get_contact():
     content = '''
     <h1>Contact Us</h1>
     <p>please fill the following contact form</p>
@@ -67,7 +67,7 @@ def greet(name, age):
 numbertoguess = random.randint(0, 9)
 
 @app.route('/guessanumber/<int:number>')
-def guess(number):
+def guessanumber(number):
     # gifs are coming from giphy.com
     answer = f'''<div style="text-align: center">
             <iframe src="https://giphy.com/embed/xUn3CftPBajoflzROU" width="100" height="100" frameBorder="0" class="giphy-embed" allowFullScreen ></iframe>
@@ -95,8 +95,8 @@ def guess(number):
 # 4. create a new directory called static to put all your images and change the path adding /static/mountain.png
 # 5. you put the styles.css inside static folder
 # !!! cache on chrome is a problem : hard reload shift + reload !!!
-@app.route('/portfolio-carozum')
-def my_portfolio():
+@app.route('/')
+def get_my_portfolio():
     return render_template('carozum.html')
 
 
@@ -105,7 +105,7 @@ def my_portfolio():
 #*******************************************************
 
 @app.route('/carozum-card')
-def name_card():
+def get_my_card():
     return render_template('carozum-card.html')
 
 
@@ -114,7 +114,7 @@ def name_card():
 #*******************************************************
 
 @app.route('/carozum-math')
-def carozum_math():
+def get_carozum_math():
     random_number = random.randint(1, 10)
     the_year = date.today().year
     return render_template('carozum-math.html', 
@@ -156,6 +156,29 @@ def guess_name(some_name):
                            gender = gender,
                            age = age,
                            count = "{:,}".format(count))
+
+#*******************************************************
+# blog / blog post using jinja templating and API for accessing json storage bin I have created on: https://www.npoint.io/
+#*******************************************************
+
+@app.route('/blog')
+def get_blog():
+    blog_url = 'https://api.npoint.io/f209a61f7d71c019f3da'
+    response = requests.get(blog_url)
+    blog_posts = response.json()
+    
+    return render_template('blog.html',
+                           blog_posts = blog_posts)
+    
+@app.route('/post/<int:index>')
+def get_post(index):
+    blog_url = 'https://api.npoint.io/f209a61f7d71c019f3da'
+    response = requests.get(blog_url)
+    blog_posts = response.json()
+    
+    return render_template('post.html',
+                           blog_posts = blog_posts,
+                           index = index)
 
 #*******************************************************
 # launch the server
